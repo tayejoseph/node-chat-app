@@ -6,17 +6,6 @@
     <body>
         <p>Welcome to the chat app</p>
     <script src = "/socket.io/socket.io.js"></script>
-    <script>
-    const socket = io(); //this creates our connection
-        socket.on('connect', () => {
-            console.log("connected to server")
-        });
-
-        socket.on("disconnect", () => {//this runs when ever the server goes down
-            console.log("disconnected from server")
-        })
-
-        
-   </script>
+    <script src = "/js/index.js"></script>
 </body>
 </html>

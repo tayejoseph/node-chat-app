@@ -15,9 +15,26 @@ app.use(express.static(publicPath)); //this is used to add the file in the publi
 
 io.on("connection", (socket) => {//this let u register an event listener
 console.log("NEw user connected");
+
+
+//THIS SEND DATA TO THE CLIENT
+socket.emit("newMessage", {//what ever u write here is what u want to send to the client
+from: "John",
+text: "see u then",
+createdAt: 123
+});//this is used to create an event which is listened to in index.js
+
+
+//THIS IS RECEIVES DATA FROM THE CLIENT
+socket.on("createMessage", (message) => {
+console.log(message)
+})
+
 socket.on('disconnect', () => {//this runs when a socket is disconnected
 console.log("User was disconnected")
 })
+
+
 })
 
 
