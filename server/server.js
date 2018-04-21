@@ -32,7 +32,7 @@ console.log('createdMessage', message);
 //AFTER RECEIVER DATA FROM THE CLIENT 
 //THIS BROADCAST THE MESSAGE RECIEVED FROM THE CLIENT TO CLIENTS CONNECTED
 io.emit('newMessage', generateMessage(message.from, message.text));
-    callback("this is from the server");//this active the callback function sent by the client
+    callback();//this active the callback function sent by the client
 });
 
 socket.on('createLocationMessage', (coords) => {
