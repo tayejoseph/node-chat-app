@@ -5,7 +5,7 @@ const http = require('http'); //no need to install it, it is a node module
 const express = require("express");//this help us to create an http server
 const socketIO = require("socket.io"); //this connect our server to our ui
 
-const {generateMessage} = require("./utils/message");
+const { generateMessage, generateLocationMessage} = require("./utils/message");
 const publicPath = path.join(__dirname, "../public"); //this provide a path that is directly to the public folder
 const port = process.env.PORT || 3000; //this make if we are using heroku it will check the port heroku provides
 const app = express(); //we are creating our app
@@ -29,14 +29,16 @@ socket.broadcast.emit('newMessage', generateMessage("Admin", "New user joined"))
 //THIS IS RECEIVES DATA FROM THE CLIENT
 socket.on("createMessage", (message, callback) => {
 console.log('createdMessage', message);
-
 //AFTER RECEIVER DATA FROM THE CLIENT 
-//THIS BROADCAST THE MESSAGE RECIEVED FROM THE CLIENT TO CLIENT CONNECTED
+//THIS BROADCAST THE MESSAGE RECIEVED FROM THE CLIENT TO CLIENTS CONNECTED
 io.emit('newMessage', generateMessage(message.from, message.text));
     callback("this is from the server");//this active the callback function sent by the client
 });
 
-
+socket.on('createLocationMessage', (coords) => {
+//THIS SEND THE LOCATION TO ALL USERS CONNECTED WHEN A USER CLICK THE LOCATION BUTTON
+io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+});
 
 
 socket.on('disconnect', () => {//this runs when a socket is disconnected
