@@ -10,17 +10,19 @@ socket.on("disconnect", function () {//this runs when ever the server goes down
 
 //LISTENING TO A CUSTOM EVENT
 socket.on('newMessage', function (message) {
+    const formattedTime = moment(message.createdAt).format('h:mm a');
     console.log("newMessage", message);
     let li = $("<li></li>");
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from}  ${formattedTime}: ${message.text}`);
     $('#messages').append(li);
 });
 
 //THIS LISTEN FOR AN EVENT WHICHH IS NEWLOCATIONMESSAGE
 socket.on('newLocationMessage', function(message){
-   const li =$('<li></li>');
+   const formattedTime = moment(message.createdAt).format('h:mm a');
+    const li =$('<li></li>');
    const a = $('<a target="_blank">My Current Location</a>');//target=_blank tell the browser to open a nw tab any time the link is clicked
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formattedTime}: `);
     a.attr('href', message.url);
     li.append(a);
     $('#messages').append(li);
